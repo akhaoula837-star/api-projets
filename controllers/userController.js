@@ -12,22 +12,23 @@ const generateToken = (userId) => {
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, login, password, role } = req.body;
 
-    const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ message: "Email déjà utilisé" });
+    const exists = await User.findOne({ login });
+    if (exists) return res.status(400).json({ message: "Login déjà utilisé" });
 
     const hashed = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       name,
-      email,
+      login,
       password: hashed,
+      role: role || "user"
     });
 
     res.status(201).json({
       message: "Utilisateur créé",
-      user: { id: newUser._id, name, email },
+      user: { id: newUser._id, name, login, role },
       token: generateToken(newUser._id),
     });
   } catch (err) {
