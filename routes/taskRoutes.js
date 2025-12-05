@@ -4,21 +4,16 @@ const {
   createTask,
   getProjectTasks,
   updateTask,
+  assignTask,
   deleteTask,
 } = require("../controllers/taskController");
 const auth = require("../middleware/authMiddleware");
+const isManager = require("../middleware/roleMiddleware");
 
-// Créer une tâche pour un projet
 router.post("/:projectId", auth, createTask);
-
-// Voir toutes les tâches d'un projet
 router.get("/:projectId", auth, getProjectTasks);
-
-// Mettre à jour une tâche
+router.put("/:id/assign", auth, isManager('manager'), assignTask);
 router.put("/:id", auth, updateTask);
-
-// Supprimer une tâche
 router.delete("/:id", auth, deleteTask);
 
 module.exports = router;
-

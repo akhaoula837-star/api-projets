@@ -12,43 +12,41 @@ const generateToken = (userId) => {
 
 exports.register = async (req, res) => {
   try {
-    const { name, login, password, role } = req.body;
+    const { nom, login, password, role } = req.body;
 
     const exists = await User.findOne({ login });
     if (exists) return res.status(400).json({ message: "Login déjà utilisé" });
 
-    const hashed = await bcrypt.hash(password, 10);
-
     const newUser = await User.create({
-      name,
+      nom,
       login,
-      password: hashed,
+      password,
       role: role || "user"
     });
 
     res.status(201).json({
       message: "Utilisateur créé",
-      user: { id: newUser._id, name, login, role },
+      user: { id: newUser._id, nom, login, role: newUser.role },
       token: generateToken(newUser._id),
     });
   } catch (err) {
-    res.status(500).json({ message: "Erreur serveur", error: err });
+    res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { login, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    const user = await User.findOne({ login });
+    if (!user) return res.status(400).json({ message: "Login ou mot de passe incorrect" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ message: "Email ou mot de passe incorrect" });
+    if (!match) return res.status(400).json({ message: "Login ou mot de passe incorrect" });
 
     res.status(200).json({
       message: "Connexion réussie",
-      user: { id: user._id, name: user.name, email },
+      user: { id: user._id, nom: user.nom, login: user.login, role: user.role },
       token: generateToken(user._id),
     });
   } catch (err) {
