@@ -1,15 +1,15 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");//importation mta3 jwt 
 
-
+//fct bech tnajm tgenerati token
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
-
+//controller bech ya3ml register luser jdida
 exports.register = async (req, res) => {
   try {
     const { nom, login, password, role } = req.body;
@@ -33,6 +33,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
+//controller bch ya3ml login luser mawjouda 
 
 exports.login = async (req, res) => {
   try {
@@ -54,7 +55,7 @@ exports.login = async (req, res) => {
   }
 };
 
-
+//controller bch yjib profil mte3 luser lmechya 
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");

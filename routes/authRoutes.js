@@ -1,20 +1,15 @@
 const express = require("express");
 const router = express.Router();
+//c lontroleur mta3 luser
 const {
   register,
   login,
   getProfile,
 } = require("../controllers/userController");
 const auth = require("../middleware/authMiddleware");
-
-// Inscription
 router.post("/register", register);
-
-// Connexion
 router.post("/login", login);
-
-// Profil (token requis)
 router.get("/me", auth, getProfile);
-
+//exportation mta3 lrouter
 module.exports = router;
 

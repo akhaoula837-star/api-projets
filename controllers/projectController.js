@@ -1,5 +1,5 @@
 const Project = require("../models/Project");
-
+//controlleur bech ykhalik tecrati projet jdid 
 exports.createProject = async (req, res) => {
   try {
     const { nom, description } = req.body;
@@ -15,7 +15,7 @@ exports.createProject = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//whedha chiyjib les projets 
 exports.getAllProjects = async (req, res) => {
   try {
     const { search, sort } = req.query;
@@ -40,7 +40,7 @@ exports.getAllProjects = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//chijib lprojet mte3 luser lmechya 
 exports.getMyProjects = async (req, res) => {
   try {
     const { search, sort } = req.query;
@@ -66,7 +66,7 @@ exports.getMyProjects = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//w hedha chyaml mise a jour lprojet mo3ayna
 exports.updateProject = async (req, res) => {
   try {
     const project = await Project.findOneAndUpdate(
@@ -81,7 +81,7 @@ exports.updateProject = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//tawa chnamlo delete lprojet mo7aded
 exports.deleteProject = async (req, res) => {
   try {
     const project = await Project.findOneAndDelete({

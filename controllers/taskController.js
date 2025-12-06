@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 const Project = require("../models/Project");
-
+//controlleur bech ykhalik tecrati task jdida f projet mo3ayenn 
 exports.createTask = async (req, res) => {
   try {
     const { titre, description, statut, deadline } = req.body;
@@ -22,7 +22,7 @@ exports.createTask = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//w hedha bish yjib les tasks mtee3 projet mo3ayen
 exports.getProjectTasks = async (req, res) => {
   try {
     const { search, sort, statut } = req.query;
@@ -52,7 +52,7 @@ exports.getProjectTasks = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//lcontroller hedha bish yapdayti task mo3ayna 
 exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -63,7 +63,7 @@ exports.updateTask = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//hedha chyaaml assigation mtaa task luser mo7aded
 exports.assignTask = async (req, res) => {
   try {
     const { utilisateurAssigne } = req.body;
@@ -81,7 +81,7 @@ exports.assignTask = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
-
+//welcontrolleur hedha chifasakh taskh mo3ayna 
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);

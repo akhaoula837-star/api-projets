@@ -1,8 +1,7 @@
-
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 require('dotenv').config();
-
+//middleware bch ynajm yverifyi token mta3 luser
 module.exports = async (req, res, next) => {
   const authHeader = req.header('Authorization') || '';
   if (!authHeader.startsWith('Bearer ')) return res.status(401).json({ msg: 'token manque' });
